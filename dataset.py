@@ -22,9 +22,8 @@ class Dataset(object):
         available_neg_num = total_num - 2  
         if available_neg_num < self.config.neg_sample_num:
             neg_sample_num = available_neg_num
-
         negSamples = []
-        while len(negSamples) <= neg_sample_num:
+        while len(negSamples) < neg_sample_num - 1:
             randomEntry = self.db.data[np.random.randint(total_num)]
             if randomEntry['word'] != self.center['word']:
                 if randomEntry['word'] != self.target['word']:

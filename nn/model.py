@@ -18,7 +18,8 @@ class Nn(object):
         self.rs_list = []
 
         self.cost = get_cost(self.center, self.target, self.negs)
-        self.gd = tf.train.GradientDescentOptimizer(0.02).minimize(self.cost)
+        self.gd = tf.train.GradientDescentOptimizer(
+            self.config.learning_rate).minimize(self.cost)
         return self
 
     def train(self):
@@ -26,8 +27,10 @@ class Nn(object):
         self.sess.run(init_op)
         for i in range(self.config.repeate_times):
             self.sess.run(self.gd)
+
             # 调参数、测试性能的时候才调用
-            self.rs_list.append(self.sess.run(self.cost))
+            if self.config.env == 'development':
+                self.rs_list.append(self.sess.run(self.cost))
         return self
 
     def export(self):
