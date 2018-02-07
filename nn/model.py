@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from op_cost import get_cost
+from .op_cost import get_cost
 import time
 
 
@@ -54,5 +54,5 @@ def test():
     print(target)
     print(negs)
     show(rs_list)
-    
+
 # test()

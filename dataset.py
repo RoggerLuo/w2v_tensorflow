@@ -7,42 +7,53 @@ negs = [np.array([7, 8, 9]), np.array([3, 6, 9])]
 
 class Dataset(object):
 
-    def __init__(self, config):
+    def __init__(self, config, db):
         self.config = config
+        self.db = db
 
-    def prepare(self,centerword,targetword):
+    def get_negSamples(self):
+        total_num = len(self.db.data)
+        max_value = total_num - 1
+        if max_value <= 0:
+            return []
 
-    
-    def getNegSamples(self,word_pair):
+        # 如果可以选择的neg 还不够 要求的，那么，调整要求为最大可获得的neg_num
+        neg_sample_num = self.config.neg_sample_num
+        available_neg_num = total_num - 2  
+        if available_neg_num < self.config.neg_sample_num:
+            neg_sample_num = available_neg_num
 
-    def get(self,word_pair): # TrainingPairs
-        
-    def set(self,)
+        negSamples = []
+        while len(negSamples) <= neg_sample_num:
+            randomEntry = self.db.data[np.random.randint(total_num)]
+            if randomEntry['word'] != self.center['word']:
+                if randomEntry['word'] != self.target['word']:
+                    negSamples.append(randomEntry)
 
-def test():
-    class Config(object):
-        vector_dimsensions = 2
+        return negSamples
 
-test()
+    def get(self, center, target):  # TrainingPairs
+        self.center = self.db.getEntryByWord(center)
+        self.target = self.db.getEntryByWord(target)
+        self.negSamples = self.get_negSamples()
+        negs = [neg['vec'] for neg in self.negSamples]
+        return self.center['vec'], self.target['vec'], negs
 
-def main():
-    string = from_db_or_from_somewhere()
-
-    sentence = Sentence(Config)
-    dataset = Dataset(Config)
-    db = Db(Config)
-    
-    word_n_context_pairs = sentence.getWordAndContext(string)
-    for pair in word_n_context_pairs:
-        center = pair['word']
-        contexts = pair['context']
-        for target in contexts:
-            nn.build(dataset.get(center,target)) # 一组cen target negs
-            nn.train()
-            dataset.set(nn.export())
-
-
-    db.save()
+    def set(self, center, target, negSamples):
+        self.center['vec'] = center
+        self.target['vec'] = target
+        for ind in range(len(negSamples)):
+            self.negSamples[ind]['vec'] = negSamples[ind]
 
 
+# 测试是否更新到了db，不需要traing 直接给值
+# def test():
+    # from config import Config
+    # string = "我爱北京天安门测试一下是不是正确，天安门上太阳升，父流程表单匹配字段中，说明文字控件不应该出现，上传文字和上传图片、日期区间控件父表单未筛选出来"
 
+# 测试getNegSamples
+
+
+# def test2():
+
+# test()
