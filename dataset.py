@@ -1,9 +1,5 @@
 import numpy as np
 
-center = np.array([1, 2, 3])
-target = np.array([4, 5, 6])
-negs = [np.array([7, 8, 9]), np.array([3, 6, 9])]
-
 
 class Dataset(object):
 
@@ -14,21 +10,20 @@ class Dataset(object):
     def get_negSamples(self):
         total_num = len(self.db.data)
         max_value = total_num - 1
-        if max_value <= 0:
-            return []
+        if max_value <= 0: return []
 
         # 如果可以选择的neg 还不够 要求的，那么，调整要求为最大可获得的neg_num
         neg_sample_num = self.config.neg_sample_num
-        available_neg_num = total_num - 2  
+        available_neg_num = total_num - 2
         if available_neg_num < self.config.neg_sample_num:
             neg_sample_num = available_neg_num
+        
         negSamples = []
         while len(negSamples) < neg_sample_num - 1:
             randomEntry = self.db.data[np.random.randint(total_num)]
             if randomEntry['word'] != self.center['word']:
                 if randomEntry['word'] != self.target['word']:
                     negSamples.append(randomEntry)
-
         return negSamples
 
     def get(self, center, target):  # TrainingPairs
@@ -43,6 +38,11 @@ class Dataset(object):
         self.target['vec'] = target
         for ind in range(len(negSamples)):
             self.negSamples[ind]['vec'] = negSamples[ind]
+
+
+# center = np.array([1, 2, 3])
+# target = np.array([4, 5, 6])
+# negs = [np.array([7, 8, 9]), np.array([3, 6, 9])]
 
 
 # 测试是否更新到了db，不需要traing 直接给值

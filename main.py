@@ -11,22 +11,29 @@ import numpy as np
 
 class Diagram(object):
 
-    def __init__(self):
+    def __init__(self, config):
+        self.config = config
         import matplotlib.pyplot as plt
-        self.fig = plt.figure(figsize=(12, 5))
+        self.fig = plt.figure(figsize=(12, 8))
         self.plt = plt
-        
-        # % 9 弄9个阵列，然后显示9个，分别更新
-        self.count = 
+        self.count = 0
 
     def start(self):
         self.plt.ion()  # 开启交互绘图
-        self.ax = self.fig.add_subplot(122)
+        self.axs = {}
+        # 添加子图
+        for i in range(self.config.subplot_num):  # 最多9张
+            name = 'ax' + str(i + 1)
+            self.axs[name] = self.fig.add_subplot(321 + i)
 
     def show(self, data):
-        # fig = plt.figure(figsize=(12, 5))
-        self.ax.clear()
-        self.ax.plot(data, 'b-')
+        # 通过余数，依次顺序更新
+        remainder = self.count % self.config.subplot_num
+        ax_name = 'ax' + str(remainder + 1)
+
+        self.axs[ax_name].clear()
+        self.axs[ax_name].plot(data, 'b-')
+        self.count += 1
         self.plt.pause(0.001)  # 显示出来
 
     def close(self):
@@ -42,8 +49,9 @@ class Main(object):
         self.dataset = Dataset(config, self.db)
         self.nn = Nn(config)
         self.config = config
+
         if self.config.env == 'development':
-            self.diagram = Diagram()
+            self.diagram = Diagram(config)
             self.diagram.start()
 
     def train_sentence(self, sentence):
@@ -54,7 +62,7 @@ class Main(object):
         if self.config.env == 'development':
             self.diagram.close()
 
-    def train_centerword_n_context_pair(self):
+    def train_centerword_n_context_pair(self, pair):
         center = pair['word']
         contexts = pair['context']
         print('training word:', center)
@@ -66,6 +74,7 @@ class Main(object):
         self.nn.build(c, t, n)  # 一组center target negs
         c, t, n, cost_list = self.nn.train().export()
         self.dataset.set(c, t, n)  # 保存回去
+
         if self.config.env == 'development':
             self.diagram.show(cost_list)
 

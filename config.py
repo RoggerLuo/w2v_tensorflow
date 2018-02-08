@@ -9,4 +9,4 @@ class Config(object):
     # env = 'production'
     repeate_times = 10
     learning_rate = 0.1
-
+    subplot_num = 6
