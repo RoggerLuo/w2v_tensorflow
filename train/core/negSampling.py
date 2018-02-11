@@ -22,10 +22,7 @@ class NegSampling(object):
         dotProduct = np.sum(t * c)
         ct_activ = self.sigmoid(dotProduct)
         
-        ___cost = 0
-        if self.config.env == 'development':
-            ___cost = - np.log(ct_activ)
-        
+        ___cost = - np.log(ct_activ)        
         ___c_grad = self.calcGrad(ct_activ, t)
         ___t_grad = self.calcGrad(ct_activ, c)
         ___n_grad = []
@@ -34,8 +31,7 @@ class NegSampling(object):
             dotProduct = np.sum(neg * c)
             cn_activ = self.sigmoid(-dotProduct)
 
-            if self.config.env == 'development':
-                ___cost -= np.log(cn_activ)  # cost 第二弹
+            ___cost -= np.log(cn_activ)  # cost 第二弹
 
             # centerword grad 第二弹
             ___c_grad -= self.calcGrad(cn_activ, neg)

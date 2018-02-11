@@ -1,16 +1,17 @@
 import os
 import numpy as np
 import pickle
-from wv import Wv  # 也许可以不用初始化多个Wv实例，到时候再处理
+from .wv import Wv  # 也许可以不用初始化多个Wv实例，到时候再处理
 
 # 数据格式 {'vec','word'}
 
 
 class Db(object):
 
-    def __init__(self, config, wv):
+    def __init__(self, config):
         self.config = config
-        self.wv = wv
+        self.wv = Wv(config)
+        
         if os.path.exists(self.config.db_path):
             with open(self.config.db_path, 'rb') as f:
                 self.data = pickle.load(f)
