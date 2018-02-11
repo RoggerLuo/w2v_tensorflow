@@ -29,8 +29,7 @@ def get_cost(centerword, targetword, negwords):
     # 循环所有negwords
     negword_costs = [grad_farther(centerword, negword) for negword in negwords]
     # 把cost加起来
-    J_negSample = grad_closer(centerword, targetword) + \
-        tf.reduce_sum(negword_costs)
+    J_negSample = grad_closer(centerword, targetword) + tf.reduce_sum(negword_costs)
     J_negSample = tf.reduce_sum(J_negSample)
     return J_negSample
 

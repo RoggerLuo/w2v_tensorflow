@@ -17,7 +17,7 @@ class Dataset(object):
         available_neg_num = total_num - 2
         if available_neg_num < self.config.neg_sample_num:
             neg_sample_num = available_neg_num
-        
+
         negSamples = []
         while len(negSamples) < neg_sample_num - 1:
             randomEntry = self.db.data[np.random.randint(total_num)]
@@ -30,14 +30,18 @@ class Dataset(object):
         self.center = self.db.getEntryByWord(center)
         self.target = self.db.getEntryByWord(target)
         self.negSamples = self.get_negSamples()
-        negs = [neg['vec'] for neg in self.negSamples]
-        return self.center['vec'], self.target['vec'], negs
+
+        length = self.config.vector_dimsensions
+
+        negs = [neg['vec'][length:] for neg in self.negSamples] # 后一半vector
+        return self.center['vec'][:length], self.target['vec'][length:], negs # 前一半 后一半
 
     def set(self, center, target, negSamples):
-        self.center['vec'] = center
-        self.target['vec'] = target
+        length = self.config.vector_dimsensions
+        self.center['vec'][:length] = center
+        self.target['vec'][length:] = target
         for ind in range(len(negSamples)):
-            self.negSamples[ind]['vec'] = negSamples[ind]
+            self.negSamples[ind]['vec'][length:] = negSamples[ind]
 
 
 # center = np.array([1, 2, 3])
