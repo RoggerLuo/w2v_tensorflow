@@ -31,8 +31,8 @@ class Dataset(object):
         return negSamples
 
     def get(self, center, target):  # TrainingPairs
-        self.center = self.db.getEntryByWord(center)
-        self.target = self.db.getEntryByWord(target)
+        self.center = self.db.get_or_createEntryByWord(center)
+        self.target = self.db.get_or_createEntryByWord(target)
         self.negSamples = self.get_negSamples()
 
         length = self.config.vector_dimsensions
