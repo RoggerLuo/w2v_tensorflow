@@ -1,0 +1,11 @@
+train/__pycache__/config.cpython-36.pyc
+train/__pycache__/train.cpython-36.pyc
+train/core/__pycache__/__init__.cpython-36.pyc
+train/core/__pycache__/negSampling.cpython-36.pyc
+train/core/nn/__pycache__/__init__.cpython-36.pyc
+train/core/nn/__pycache__/model.cpython-36.pyc
+train/core/nn/__pycache__/op_cost.cpython-36.pyc
+train/dataset/__pycache__/__init__.cpython-36.pyc
+train/dataset/__pycache__/dataset.cpython-36.pyc
+train/dataset/__pycache__/db.cpython-36.pyc
+train/dataset/__pycache__/wv.cpython-36.pyc
