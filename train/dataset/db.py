@@ -22,7 +22,10 @@ class Db(object):
         with open(self.config.db_path, 'wb') as f:
             pickle.dump(self.data, f, True)
 
-    def getEntryByWord(self, word):
+    def getEntrysByWord(self,word):
+        return list(filter(lambda e: e['word'] == word, self.data))
+
+    def get_or_createEntryByWord(self, word):
         rs = list(filter(lambda e: e['word'] == word, self.data))
         if len(rs) == 0:  # 没找到
             newEntry = {'vec': self.wv.getStartVector(), 'word': word}
