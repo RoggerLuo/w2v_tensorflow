@@ -17,6 +17,7 @@ def findWord(db, word, length=10):
         # deviationArr = np.fabs(deviationArr)
         deviationArr = [round(de, 5) for de in deviationArr.tolist()]
         deviationArr = np.square(np.array(deviationArr))
+        # deviationArr = np.array(deviationArr)
         deviation = np.sum(deviationArr)
         unsortedList.append({'deviation': deviation, 'word': et['word']})
 
@@ -26,4 +27,4 @@ def findWord(db, word, length=10):
         print(element['word'])
 
 db = Db(Config)
-findWord(db,'开心', 20)
+findWord(db,'眼泪', 20)
