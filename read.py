@@ -1,7 +1,7 @@
 from main import Task
 
 t = Task()
-f2 = open("./corpus/知乎/2家庭原因造就的童年心理创伤有可能被修复吗.txt","r")  
+f2 = open("./corpus/知乎/家庭原因造就的童年心理创伤有可能被修复吗.txt","r")  
 lines = f2.readlines()  
 length = len(lines)
 for x in range(20):
