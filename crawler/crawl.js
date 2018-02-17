@@ -21,10 +21,6 @@ const rq = (url) => {
 const jsdom = require("jsdom")
 const { JSDOM } = jsdom
 
-function trim(str){
-    return str.replace(/(^\s*)|(\s*$)/g, '')
-}
-
 const deal_with_content = (content) => {
     const dom = new JSDOM(content)
     const scripts = dom.window.document.getElementsByTagName('script')
