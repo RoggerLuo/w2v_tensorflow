@@ -41,8 +41,9 @@ const load_content = (url,ind) => {
         let content = yield rq(url)
         const text = deal_with_content(content)
         fs.writeFileSync(`./result/${ind}.txt`,  text)// decodeURI(encodeURI(
-    })    
+    })
 }
+
 result.forEach((el,ind)=>{
     console.log(`正在请求第${ind}篇文章...`)
     load_content(el,ind)
