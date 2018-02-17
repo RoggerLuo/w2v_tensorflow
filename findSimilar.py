@@ -27,4 +27,4 @@ def findWord(db, word, length=10):
         print(element['word'])
 
 db = Db(Config)
-findWord(db,'性格', 20)
+findWord(db,'嫉妒', 20)
