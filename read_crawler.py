@@ -20,10 +20,10 @@ for x in range(20):
         length = len(lines)
         for i in range(length):
             print('[第%d轮]' %x)
-            print('    当前第%d段,一共%d段:' %(i,length))
+            print('    文件%s:当前第%d段,一共%d段:' %(item,i,length))
             trimmedContent = lines[i].strip()
             if len(trimmedContent) > 20:
-                print (trimmedContent)
+                print (trimmedContent[:10])
                 t.readTxtLine(trimmedContent)
             else: 
                 print('    console:当前line太短了,跳过')
