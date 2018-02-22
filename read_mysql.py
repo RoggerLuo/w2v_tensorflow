@@ -19,15 +19,14 @@ def readNotes():
     conn.close()
     return values
 
-for x in range(20):
+for x in range(20000):
     notes = readNotes()
     length = len(notes)
     for i in range(length):
         content = notes[i][2]
-        print('[第%d轮]' % x)
-        print('    当前第%d段,一共%d段:' % ( i, length))
-        trimmedContent = content.strip()
-        print(trimmedContent[:10])
-        t.readTxtLine(trimmedContent)
-
-
+        if len(content) > 10:
+            print('[第%d轮]' % x)
+            print('    当前第%d段,一共%d段:' % (i, length))
+            trimmedContent = content.strip()
+            print(trimmedContent[:20])
+            t.readTxtLine(trimmedContent)
