@@ -1,16 +1,16 @@
 from train.dataset.db import Db
 from train.config import Config
 import numpy as np
-
+import sys
 
 def findWord(db, word, length=10):
     entrys = db.getEntrysByWord(word)
     if len(entrys) == 0:
         print('没找到')
         return False
-    
+
     entry = entrys[0]
-    
+
     unsortedList = []
     for et in db.data:
         deviationArr = entry['vec'][:8] - et['vec'][:8]
@@ -26,5 +26,6 @@ def findWord(db, word, length=10):
     for element in sortedList[0:length]:
         print(element['word'])
 
-db = Db(Config)
-findWord(db,'嫉妒', 20)
+if __name__ == '__main__':
+    db = Db(Config)
+    findWord(db, sys.argv[1], 20)
