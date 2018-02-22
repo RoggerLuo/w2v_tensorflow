@@ -2,8 +2,8 @@
 class Config(object):
     db_path = './w2v.pkl'
     vector_dimsensions = 8
-    neg_sample_num = 15
-    window_size = 3
+    neg_sample_num = 10
+    window_size = 5
     # training nn
     # env = 'development'
     env = 'production'

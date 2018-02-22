@@ -1,4 +1,4 @@
 
 class Config(object):
-    repeate_times = 5
+    repeate_times = 6
     
