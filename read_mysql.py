@@ -1,12 +1,12 @@
 from main import Task
 import os
-import mysql.connector
-
+#import mysql.connector
+import pymysql
 t = Task()
 
 
 def connect2Mysql():
-    conn = mysql.connector.connect(
+    conn = pymysql.connect(
         user='root', password='as56210', database='flow4.0', use_unicode=True)
     cursor = conn.cursor()
     return conn, cursor
